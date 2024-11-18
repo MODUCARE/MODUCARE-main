@@ -1,0 +1,93 @@
+.App {
+  text-align: center;
+  background-color: #c4b3ab;
+  height: 100vh;
+}
+
+.App-logo {
+  margin-top: 20px;
+  height: 14vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin: 0 20px;
+}
+
+.App-body {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Body-logo {
+  margin: -10px 0;
+  width: 70%;
+  max-width: 600px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-QRBox-QR-img {
+  border-radius: 10px;
+  width: 42%;
+}
+
+.App-QRBox {
+  margin-top: 5vmin;
+  background-color: #72635a;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 150px;
+  width: 50%;
+  max-width: 350px;
+  padding: 10px 15px;
+}
+
+.App-body h3 {
+  width: 90%; /* 컨테이너의 90% 너비 사용 */
+  word-break: keep-all; /* 한글 단어 단위로 줄바꿈 */
+  word-wrap: break-word; /* 긴 단어의 경우 줄바꿈 */
+  line-height: 1.4; /* 줄간격 설정 */
+  z-index: 1;
+}
+
+.Main-character {
+  position: absolute;
+  top: 35%;
+  left: 75%;
+  width: 25%;
+  min-width: 100px;
+  z-index: 0;
+}
+
+.Main-head {
+  position: absolute;
+  top: 24%;
+  right: 78%;
+  width: 22%;
+  min-width: 100px;
+  z-index: 0;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
