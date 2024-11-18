@@ -56,7 +56,7 @@ AI
 
 ## 🙋🏻 팀원소개
 
-|                  FrontEnd                  |                   FrontEnd                    |                  BackEnd                   |                  BackEnd                   |                  AI                        |                  Infra                         |
+|                  FrontEnd                  |                   FrontEnd                    |                  BackEnd                   |                  BackEnd,IoT               |                  AI                        |                  Infra                         |
 | :-----------------------------------------: | :-------------------------------------------: | :----------------------------------------: | :----------------------------------------: |:----------------------------------------: |:----------------------------------------: |
 | <img src="https://avatars.githubusercontent.com/u/89523520?v=4" width="100px;" alt=""/> | <img src="https://avatars.githubusercontent.com/u/89523520?v=4" width="100px;" alt=""/> | <img src="https://avatars.githubusercontent.com/u/103016453?v=4" width="100px;" alt=""/> | <img src="https://avatars.githubusercontent.com/u/38430900?v=4" width="100px;" alt=""/> | <img src="https://avatars.githubusercontent.com/u/89523520?v=4" width="100px;" alt=""/> |<img src="https://avatars.githubusercontent.com/u/89523520?v=4" width="100px;" alt=""/> |
 |     😎 오진영     |     😎 오승준     |     👑 박민지     |     😎 유현진     |😎 서두나     |😎 최태민     |
