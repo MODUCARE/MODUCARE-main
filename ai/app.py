@@ -1,4 +1,5 @@
 import io
+import os
 from concurrent.futures import ThreadPoolExecutor
 
 import httpx
@@ -9,6 +10,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from torchvision import transforms
+
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 app = FastAPI()
 
@@ -96,6 +100,9 @@ async def diagnose_scalp(request: ImageRequest):
         img = await preprocess_image(img_url)
     except ValueError as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+    # 입력 데이터를 GPU로 이동
+    img = img.to(device)
 
     # 이미지가 두피 이미지인지 확인 (모델7 사용)
     if predict_scalp(img) != 0:
