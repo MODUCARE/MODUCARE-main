@@ -11,10 +11,18 @@ interface PopupModalProps {
   onClose: () => void;
   content: string;
   option: 'Alert' | 'confirmMark' | 'Loading';
-  callback?: () => void;
+  confirm?: () => void | 'none';
+  cancel?: () => void | 'none';
 }
 
-const PopupModal = ({visible, onClose, content, option}: PopupModalProps) => {
+const PopupModal = ({
+  visible,
+  onClose,
+  content,
+  option,
+  confirm,
+  cancel,
+}: PopupModalProps) => {
   const lottieSource =
     option === 'Alert'
       ? Alert
@@ -22,7 +30,13 @@ const PopupModal = ({visible, onClose, content, option}: PopupModalProps) => {
       ? confirmMark
       : Loading;
 
-  const handleClose = () => {
+  const handleConfirm = () => {
+    confirm && confirm();
+    onClose();
+  };
+
+  const handleCancel = () => {
+    cancel && cancel();
     onClose();
   };
 
@@ -43,9 +57,14 @@ const PopupModal = ({visible, onClose, content, option}: PopupModalProps) => {
             style={[styles.confirmMark]}
           />
           <CustomText label={content} />
-          {option !== 'Loading' && (
-            <CustomButton label="확인" onPress={handleClose} size="small" />
-          )}
+          <View style={styles.buttonArea}>
+            {confirm !== 'none' && (
+              <CustomButton label="확인" onPress={handleConfirm} size="small" />
+            )}
+            {cancel !== 'none' && (
+              <CustomButton label="취소" onPress={handleCancel} size="small" />
+            )}
+          </View>
         </View>
       </View>
     </Modal>
@@ -82,6 +101,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     alignSelf: 'center',
+  },
+  buttonArea: {
+    flexDirection: 'row',
+    gap: 10,
   },
 });
 

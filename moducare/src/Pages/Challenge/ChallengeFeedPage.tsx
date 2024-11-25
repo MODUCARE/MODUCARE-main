@@ -28,7 +28,15 @@ const ChallengeFeedPage = ({
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {id, title, type} = route.params;
   const [isType, setIsType] = useState(type);
-  const {visible, option, content, showPopup, hidePopup} = usePopup();
+  const {
+    visible,
+    option,
+    content,
+    showPopup,
+    hidePopup,
+    popupConfirm,
+    popupCancel,
+  } = usePopup();
 
   const handleWrite = async () => {
     const isDone = await getEncryptStorage('isDone');
@@ -37,7 +45,10 @@ const ChallengeFeedPage = ({
     } else {
       showPopup({
         option: 'Alert',
-        content: '사진 등록 완료! \n 내일 다시 해주세요!',
+        content: '오늘 인증 완료! \n내일 다시 해주세요!',
+        confirm: () => {
+          hidePopup();
+        },
       });
     }
   };
@@ -47,8 +58,13 @@ const ChallengeFeedPage = ({
     navigation.goBack();
   };
   const handleJoin = async () => {
+    showPopup({option: 'Loading', content: '챌린지 추가 중 입니다.'});
     await postJoinChallenge(id);
-    setIsType('myChallenge');
+    showPopup({
+      option: 'confirmMark',
+      content: '챌린지 추가 완료!',
+      confirm: () => navigation.goBack(),
+    });
   };
 
   const {
@@ -137,6 +153,15 @@ const ChallengeFeedPage = ({
         option={option}
         onClose={hidePopup}
         content={content}
+        confirm={
+          // option === 'confirmMark'
+          //   ? () => {
+          //       navigation.goBack();
+          //     }
+          //   : popupConfirm
+          popupConfirm
+        }
+        cancel={popupCancel}
       />
     </SafeAreaView>
   );

@@ -36,7 +36,15 @@ export default function DiaryPage() {
   const [userName, setUserName] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
-  const {visible, option, content, showPopup, hidePopup} = usePopup();
+  const {
+    visible,
+    option,
+    content,
+    showPopup,
+    hidePopup,
+    popupConfirm,
+    popupCancel,
+  } = usePopup();
 
   const [isLine, setIsLine] = useState(false);
   const [imgType, setImgType] = useState<'line' | 'top'>();
@@ -71,15 +79,33 @@ export default function DiaryPage() {
   };
 
   const openSelectPopup = () => {
-    showPopup({option: 'Alert', content: '사진을 등록해주세요!'});
+    showPopup({
+      option: 'Alert',
+      content: '사진을 등록해주세요!',
+      confirm: () => {
+        hidePopup();
+      },
+    });
   };
 
   const openUploadPopup = () => {
-    showPopup({option: 'confirmMark', content: '사진이 등록되었습니다!'});
+    showPopup({
+      option: 'confirmMark',
+      content: '사진이 등록되었습니다!',
+      confirm: () => {
+        hidePopup();
+      },
+    });
   };
 
   const openErrorPopup = () => {
-    showPopup({option: 'Alert', content: '사진 업로드에 실패했습니다!'});
+    showPopup({
+      option: 'Alert',
+      content: '사진 업로드에 실패했습니다!',
+      confirm: () => {
+        hidePopup();
+      },
+    });
   };
 
   const imageUpload = async () => {
@@ -222,6 +248,8 @@ export default function DiaryPage() {
         option={option}
         onClose={hidePopup}
         content={content}
+        confirm={popupConfirm}
+        cancel={popupCancel}
       />
       <View style={styles.bottomSpace} />
     </SafeAreaView>
