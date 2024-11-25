@@ -25,12 +25,17 @@ const postLogin = async ({
   accessToken,
 }: RequestLogin): Promise<ResponseLogin> => {
   try {
+    console.log('registerId---------------', registerId);
+    console.log('fcmToken---------------', fcmToken);
+    console.log('accessToken---------------', accessToken);
     const {data} = await axiosInstance.post(`members/login/${registerId}`, {
       accessToken,
       fcmToken,
     });
+    console.log('data---------------', data);
     return data;
   } catch (error) {
+    console.log('백엔드에서 오는 에러?', error);
     console.error(error);
     throw error;
   }
@@ -68,7 +73,7 @@ const postLogout = async (fcmToken: string): Promise<void> => {
 
 const deleteMember = async (): Promise<void> => {
   try {
-    const {data} = await axiosInstance.delete('members');
+    const {data} = await axiosInstance.delete('members/');
 
     return data;
   } catch (error) {

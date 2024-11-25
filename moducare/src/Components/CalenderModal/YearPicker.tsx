@@ -25,9 +25,8 @@ const YearPicker = ({
   );
   useEffect(() => {
     // 현재 선택된 년도의 인덱스 찾기
-    const selectedYearIndex = years.findIndex(
-      year => year === currentMonth.getFullYear(),
-    );
+    const selectedYear = currentMonth.getFullYear() || 0;
+    const selectedYearIndex = years.findIndex(year => year === selectedYear);
 
     // 스크롤 위치 계산 및 이동
     if (selectedYearIndex !== -1) {

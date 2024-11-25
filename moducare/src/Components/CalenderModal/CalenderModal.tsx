@@ -46,7 +46,7 @@ const CalenderModal = ({
     '12',
   ];
   const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
-  const [currentMonth, setCurrentMonth] = useState(new Date(nowDate));
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [showYearPicker, setShowYearPicker] = useState(false);
 
   const goToNextMonth = () => {
@@ -65,8 +65,10 @@ const CalenderModal = ({
     const initializeDate = async () => {
       try {
         const info = await getEncryptStorage('info');
-        if (info) {
+        if (info?.birth) {
           setCurrentMonth(new Date(info.birth)); // info.date가 날짜 문자열이라고 가정
+        } else {
+          setCurrentMonth(new Date()); // birth 정보가 없으면 현재 날짜 사용
         }
       } catch (error) {
         console.error('날짜 정보를 가져오는데 실패했습니다:', error);

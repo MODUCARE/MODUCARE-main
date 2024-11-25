@@ -58,7 +58,15 @@ export default function ChallengeMainPage({navigation}: {navigation: any}) {
   const [title, setTitle] = React.useState<string>('');
   //챌린지 생성 이미지 관련
   const [imgConfig, setImgConfig] = React.useState<any>(null);
-  const {visible, option, content, showPopup, hidePopup} = usePopup();
+  const {
+    visible,
+    option,
+    content,
+    showPopup,
+    hidePopup,
+    popupConfirm,
+    popupCancel,
+  } = usePopup();
 
   const openImageLibrary = async () => {
     const images = await launchImageLibrary(options.options);
@@ -69,7 +77,13 @@ export default function ChallengeMainPage({navigation}: {navigation: any}) {
 
   const imageUpload = async () => {
     if (title === '') {
-      showPopup({option: 'Alert', content: '챌린지명을 작성해주세요!'});
+      showPopup({
+        option: 'Alert',
+        content: '챌린지명을 작성해주세요!',
+        confirm: () => {
+          hidePopup();
+        },
+      });
       return;
     }
 
@@ -108,9 +122,18 @@ export default function ChallengeMainPage({navigation}: {navigation: any}) {
       showPopup({
         option: 'confirmMark',
         content: '챌린지 생성 완료!',
+        confirm: () => {
+          hidePopup();
+        },
       });
     } catch (error) {
-      showPopup({option: 'Alert', content: '챌린지 생성에 실패했습니다!'});
+      showPopup({
+        option: 'Alert',
+        content: '챌린지 생성에 실패했습니다!',
+        confirm: () => {
+          hidePopup();
+        },
+      });
     }
     // 2. 초기화
     setImgConfig(null);
@@ -298,6 +321,8 @@ export default function ChallengeMainPage({navigation}: {navigation: any}) {
         option={option}
         onClose={hidePopup}
         content={content}
+        confirm={popupConfirm}
+        cancel={popupCancel}
       />
     </SafeAreaView>
   );

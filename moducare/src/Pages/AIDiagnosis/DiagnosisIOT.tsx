@@ -75,7 +75,7 @@ const DiagnosisIOT = ({navigation}) => {
           <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 0.9}}>
             <View style={styles.cameraArea}>
               <WebView
-                source={{uri: 'http://192.168.137.225:8000'}}
+                source={{uri: 'http://192.168.137.24:8000'}}
                 onError={handleWebViewError}
               />
             </View>

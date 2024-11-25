@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import ItemBox from '../ItemBox/ItemBox';
 import CustomText from '../Common/CustomText';
 import SvgIconAtom from '../Common/SvgIconAtom';
@@ -96,11 +96,9 @@ export default function WeatherInfo() {
               <CustomText label="로딩 중...😍" size={24} variant="regular" />
             </View>
           ) : (
-            <CustomText
-              label={weatherData?.gptResponse}
-              size={16}
-              variant="regular"
-            />
+            <Text style={styles.gptResponseText}>
+              {weatherData?.gptResponse}
+            </Text>
           )}
         </View>
       </ItemBox>
@@ -128,5 +126,11 @@ const styles = StyleSheet.create({
   loading: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  gptResponseText: {
+    fontSize: 16,
+    fontFamily: 'Pretendard-Medium',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
 });

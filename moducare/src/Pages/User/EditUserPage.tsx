@@ -22,7 +22,15 @@ type userInfo = {
 export default function EditUserPage() {
   const navigation = useNavigation();
   const date = new Date();
-  const {visible, option, content, showPopup, hidePopup} = usePopup();
+  const {
+    visible,
+    option,
+    content,
+    showPopup,
+    hidePopup,
+    popupConfirm,
+    popupCancel,
+  } = usePopup();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
@@ -38,7 +46,13 @@ export default function EditUserPage() {
         birth: selectedDate,
         email: Info?.email,
       });
-      showPopup({option: 'confirmMark', content: '수정되었습니다!'});
+      showPopup({
+        option: 'confirmMark',
+        content: '수정되었습니다!',
+        confirm: () => {
+          hidePopup();
+        },
+      });
     }
   };
 
@@ -117,11 +131,10 @@ export default function EditUserPage() {
       <PopupModal
         visible={visible}
         option={option}
-        onClose={() => {
-          hidePopup();
-          navigation.goBack();
-        }}
+        onClose={hidePopup}
         content={content}
+        confirm={popupConfirm}
+        cancel={popupCancel}
       />
     </SafeAreaView>
   );
