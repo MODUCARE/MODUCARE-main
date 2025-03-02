@@ -56,7 +56,10 @@ public class EnvironmentalDataService {
                     .uvCondition(uvData)
                     .build();
 
-            redisTemplate.opsForValue().set(locationKey, newData, Duration.ofHours(1));
+            if (dustData == -1 && temperatureData == -1 && uvData == -1) {
+                System.out.println("Dust data is null");
+                return null;
+            } else redisTemplate.opsForValue().set(locationKey, newData, Duration.ofHours(1));
 
             return newData;
         } catch (InterruptedException | ExecutionException e) {

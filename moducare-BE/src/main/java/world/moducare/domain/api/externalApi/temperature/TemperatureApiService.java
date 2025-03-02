@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -152,6 +153,13 @@ public class TemperatureApiService {
 
         return baseTime; // 기본 시간 반환
     }
+
+    @Recover
+    public CompletableFuture<Integer> recoverTemperatureApi(DataNotFoundException e, WeatherRequestDto weatherRequestDto) {
+        // 온도 API 실패 시 기본값 반환
+        return CompletableFuture.completedFuture(-273); // -273은 절대 영도, 실패를 의미
+    }
+
 
     // JSON 응답에서 기온을 파싱하는 메서드
     private int parseTemperature(String responseBody, LocalDateTime adjustedNow) {

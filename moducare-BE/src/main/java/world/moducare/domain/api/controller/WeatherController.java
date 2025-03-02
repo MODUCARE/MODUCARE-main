@@ -27,8 +27,14 @@ public class WeatherController {
     @Operation(summary = "현재 기준 날씨 예보 정보 조회")
     public ResponseEntity<WeatherResultResponseDto> getWeatherData(@RequestBody WeatherRequestDto weatherRequestDto) {
         WeatherResponseDto weatherResponseDto = environmentalDataService.getEnvironmentalData(weatherRequestDto);
+        WeatherResultResponseDto result;
+        if (weatherResponseDto == null) {
+            WeatherResponseDto nullWeatherResponseDto = WeatherResponseDto.builder().airCondition(0).uvCondition(0).temperature(0).build();
+            result = WeatherResultResponseDto.builder().weatherDto(nullWeatherResponseDto).gptResponse("오늘은 자라나라머리머리빔의 행운이 가득할거에요! ").build();
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        }
         String gptAnswer = gptService.chat(promptService.makeEnvironmentPrompt(weatherResponseDto));
-        WeatherResultResponseDto result = WeatherResultResponseDto.builder().weatherDto(weatherResponseDto).gptResponse(gptAnswer).build();
+        result = WeatherResultResponseDto.builder().weatherDto(weatherResponseDto).gptResponse(gptAnswer).build();
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

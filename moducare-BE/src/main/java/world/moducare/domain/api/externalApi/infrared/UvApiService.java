@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -123,6 +124,13 @@ public class UvApiService {
             throw new DataNotFoundException("Error parsing JSON response");
         }
     }
+
+    @Recover
+    public CompletableFuture<Integer> recoverUvApi(DataNotFoundException e, WeatherRequestDto weatherRequestDto) {
+        // UV API 실패 시 기본값을 반환
+        return CompletableFuture.completedFuture(-1); // -1을 UV 데이터 기본값으로 사용
+    }
+
 
     public int callUvApiSync(WeatherRequestDto weatherRequestDto) {
         try {

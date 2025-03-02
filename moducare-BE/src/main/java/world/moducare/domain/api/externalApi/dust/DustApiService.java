@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -62,6 +63,13 @@ public class DustApiService {
             }
         });
     }
+
+    @Recover
+    public CompletableFuture<Integer> recoverDustApi(DataNotFoundException e, WeatherRequestDto weatherRequestDto) {
+        // 미세먼지 API 실패 시 기본값 반환
+        return CompletableFuture.completedFuture(-1); // 미세먼지 데이터 기본값을 -1로 설정
+    }
+
 
     // stationName이 동일한 item의 pm10Grade1h
     private int parseDustValue(String responseBody) {
